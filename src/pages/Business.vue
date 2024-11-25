@@ -7,13 +7,14 @@
       </div>
       <div class="grid w-full gap-6 lg:grid-cols-3">
     <!-- Première colonne -->
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-8">
       <!-- Première carte -->
       <div 
         class="p-5 bg-white rounded-xl relative min-lg:h-[217px] h-[95px] flex lg:flex-col md:flex-col justify-between lg:justify-start mb:justify-center"
         :style="{
           height: expandedStates[0] && isSmallScreen ? '217px' : (isSmallScreen ? '95px' : '217px'), 
-          width: 'full'
+          width: '100%', 
+      
         }"
       >
         <!-- Titre visible uniquement sur petit écran quand non-expandé -->
@@ -26,7 +27,7 @@
 
         <div class="absolute left-0 top-[20px] h-[20px] bg-[#ffcc01] w-[10px]"></div>
         <!-- Composant UnpaidTotalCard -->
-        <div v-if="expandedStates[0] || !isSmallScreen">
+        <div v-if="expandedStates[0] || !isSmallScreen" class="flex justify-center">
           <UnpaidTotalCard
             title="Total des ventes"
             contentText="Disponibilité limitée"
@@ -45,10 +46,13 @@
 
 
       <!-- Deuxième carte -->
-      <div class="p-5 bg-white rounded-xl relative lg:h-[217px] h-[95px] flex lg:flex-col md:flex-col justify-between lg:justify-start mb:justify-center"
+      <div class="p-5 bg-white   rounded-xl relative lg:h-[217px] h-[95px] flex lg:flex-col md:flex-col justify-between lg:justify-start mb:justify-center"
       :style="{
           height: expandedStates[1] && isSmallScreen ? '217px' : (isSmallScreen ? '95px' : '217px'), 
-          width: 'full'
+          width: '100%', 
+      display: 'flex',
+      
+          
         }" >
       
         <div v-if="isSmallScreen && !expandedStates[1]"  class="text-[16px] font-bold text-[#212529]">
@@ -78,7 +82,7 @@
           width: 'full'
         }" >
       
-        <div           v-if="isSmallScreen && !expandedStates[2]" 
+        <div v-if="isSmallScreen && !expandedStates[2]" 
         class="text-[16px] font-bold text-[#212529]">
           Consommation des services
         </div>
@@ -101,11 +105,11 @@
     </div>
 
     <!-- Deuxième colonne -->
-    <div class="flex flex-col items-start justify-center gap-4 lg:col-span-2 md:justify-center md:items-center lg:justify-normal lg:items-stretch">
+    <div class="flex flex-col items-start justify-center gap-8 lg:col-span-2 md:justify-center md:items-center lg:justify-normal lg:items-stretch">
       <!-- Quatrième carte -->
-      <div class="p-5 bg-white rounded-xl relative lg:h-[251px] w-full h-[95px] flex lg:flex-col md:flex-col justify-between lg:justify-start mb:justify-center"
+      <div class="p-5 bg-white rounded-xl relative lg:h-[253px] w-full h-[95px] flex lg:flex-col md:flex-col justify-between lg:justify-start mb:justify-center"
       :style="{
-          height: expandedStates[3] && isSmallScreen ? '217px' : (isSmallScreen ? '95px' : '217px'), 
+          height: expandedStates[3] && isSmallScreen ? '253px' : (isSmallScreen ? '95px' : '253px'), 
         }" >
       
         <div           v-if="isSmallScreen && !expandedStates[3]" 
@@ -133,18 +137,19 @@
       </div>
 
       <!-- Cinquième carte -->
-      <div class="p-5 bg-white rounded-xl relative w-full lg:h-[251px] md:w-[358px] lg:w-auto h-[95px] flex lg:flex-col md:flex-col justify-between lg:justify-start mb:justify-center"
+      <div class="p-5 bg-white rounded-xl relative w-full lg:h-[253px] md:w-[358px] lg:w-auto h-[95px] flex lg:flex-col md:flex-col justify-between lg:justify-start mb:justify-center"
       :style="{
-          height: expandedStates[4] && isSmallScreen ? '217px' : (isSmallScreen ? '95px' : '217px'), 
-          
+          height: expandedStates[4] && isSmallScreen ? '253px' : (isSmallScreen ? '95px' : '253px'), 
+          width: '100%', 
+    
         }" >
       
-        <div           v-if="isSmallScreen && !expandedStates[4]" 
+        <div v-if="isSmallScreen && !expandedStates[4]" 
         class="text-[16px] font-bold text-[#212529]">
           Mini relevé de compte
         </div>
           <div class="absolute left-0 top-[20px] h-[20px] bg-[#ffcc01] w-[10px]"></div>
-          <div v-if="expandedStates[4] || !isSmallScreen">
+          <div v-if="expandedStates[4] || !isSmallScreen" style="display: flex;  justify-content: center;">
             <UnpaidTotalCard
             title="Mini relevé de compte"
             contentText="Aucun relevé disponible"

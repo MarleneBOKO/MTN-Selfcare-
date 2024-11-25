@@ -23,7 +23,7 @@
       <ul class="flex flex-col gap-2">
 
         <li class="flex items-center">          
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="black" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="black" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"/></svg>
           <router-link to="/" class="w-full px-4 py-2 text-base text-black" active-class="font-bold">
             Accueil
           </router-link>

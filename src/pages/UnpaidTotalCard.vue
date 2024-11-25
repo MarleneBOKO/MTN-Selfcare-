@@ -30,25 +30,49 @@
     type: String,
     default: 'Additional content paragraph'
   }
+  
 });
 
+import { ref, onMounted, onUnmounted } from "vue";
 
+const expandedStates = ref([false, false, false, false, false]);
+const isSmallScreen = ref(window.innerWidth < 1024);
+
+const toggleExpand = (index) => {
+  expandedStates.value[index] = !expandedStates.value[index];
+};
+
+const handleResize = () => {
+  isSmallScreen.value = window.innerWidth < 1024;
+};
+
+onMounted(() => {
+  window.addEventListener("resize", handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", handleResize);
+});
 
 </script>
   
 <template>
   <div class="flex flex-col w-full gap-2">
-    <h3 class="text-[16px] font-bold text-[#212529]">{{ title }}</h3>
+   <div class="flex justify-between ">
+    <div class="flex flex-col">
+      <h3 class="text-[16px] font-bold text-[#212529]">{{ title }}</h3>
 
-    <p class="text-xs text-[#212529] text-wrap  lg:w-[325px]  lg:flex md:flex">
-      {{ paracontent }}
-    </p>
+      <p class="text-xs text-[#212529] text-wrap  lg:w-[325px]  lg:flex md:flex">
+        {{ paracontent }}
+      </p>
+    </div>
 
+   </div>
     <!-- Contenu principal avec l'icône -->
     <div
       class="flex flex-col items-center justify-center w-full gap-3 py-4 text-center "
     >
-      <Icon :icon="icon" :width="iconWidth" :height="iconHeight" :color="iconFill"  class=""/>
+      <Icon :icon="icon" :width="iconWidth" :height="iconHeight" :color="iconFill"  class="items-center "/>
       <h3 class="text-[15px] font-medium text-wrap  text-center">{{ contentText }}</h3>
     </div>
   </div>

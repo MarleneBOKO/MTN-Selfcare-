@@ -1,11 +1,11 @@
 <template>
   <div class=" gap-7 lg:py-[40px] lg:px-[60px] md:px-[60px] px-4 flex flex-col lg:flex-row md:flex-col md:py-[40px] py-[90px]">
-    <div class="flex flex-col justify-between h-full gap-7">
+    <div class="flex flex-col justify-between h-full gap-8">
       <div class="flex flex-col w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <h1 class="lg:text-2xl md:text-2xl font-bold text-[#21252] sm:text-lg">Ma consommation</h1>
         <p class="mb-4 lg:text-[16px] md:text-[16px] text-[#6c757d] sm:text-sm text-nowrap">Consommation sur les sept derniers jours</p>
     
-        <div class="grid w-full grid-cols-2 gap-6 lg:grid-cols-4 md:grid-cols-2">
+        <div class="grid w-full grid-cols-2 gap-8 lg:grid-cols-4 md:grid-cols-2">
           <ConsommationItem
             icon="mage:phone-call" 
             spanText="Appels"
@@ -42,13 +42,29 @@
         <div class="flex flex-col">
         <h3 class="text-lg font-bold text-[#21252]">Mes souscriptions</h3>
         <p class="mb-4 text-[16px] text-[#6c757d]"> Produits & services souscrits et en cours de validité sur mon compte </p>
-          <div class="bg-white p-[20px] text-[#6c757d] text-sm border-l-[10px] border-l-[#ffcc01] rounded-[10px] mb-[15px]"> Vous n'avez souscrit à aucun service pour le moment. </div>
-        <div class="flex flex-col">
+          <div v-if="showNoSubscription" class="bg-white p-[20px] text-[#6c757d] text-sm border-l-[10px] border-l-[#ffcc01] rounded-[10px] mb-[15px]"> Vous n'avez souscrit à aucun service pour le moment. </div>
+         <div v-else class="flex flex-col gap-6 lg:flex-row">
+          <Subscription 
+          title="INTERNET"
+          amount="100"
+          shortDetails="100 (200F/24h)"
+          longDetails=" 250F/220Mo/24h actif. Restant 105 Mo valable jusqu'au 25-11-24 11:30:15.Activez vos forfaits sans frais par MoMo "
+        /> 
+
+        <Subscription 
+          title="Maxi"
+          amount="200"
+          shortDetails="200 (460F/24h)"
+          longDetails=" Votre forfait Maxi 200F a expire le 24-11-2024 a 17:35:01. Active un forfait egal ou superieur au plus tard le 25-11-24 17:35:01 et beneficie de ton solde restant.Payez sans frais par MoMo. "
+        />
+         </div>
+    
+            <div class="flex flex-col">
           <h3 class="lg:text-lg font-bold text-[#21252] md:text-lg text-[16px]">Gérer ma SIM</h3>
 
             <p class="mb-4 lg:text-[16px] md:text-[16px] text-sm text-[#6c757d]">  Opérations et paramétrages pour carte SIM  </p>
 
-          <div class="grid w-full gap-6 lg:grid-cols-4 md:grid-cols-2">
+          <div class="grid w-full gap-8 lg:grid-cols-4 md:grid-cols-2">
             <div class="min-w-[190px]">
           <OperationItem
             boldText="MTN Infos carte SIM"
@@ -147,11 +163,12 @@ import ConsommationItem from './ConsommationItem.vue'
 import OperationItem from './OperationItem.vue';
 import ModalInfo from './ModalInfo.vue';
 import ModalYellow from './ModalYellow.vue';
+import Subscription from './Subscription.vue';
 
 const isModalVisible = ref(false);
 const modalTitle = ref('');
 const modalContent = ref({});
-
+const showNoSubscription = Math.random() < 0.5;
 const isModalOpen = ref(false);
 
 const toggleModal = () => {
