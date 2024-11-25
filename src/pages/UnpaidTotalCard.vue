@@ -60,7 +60,7 @@ onUnmounted(() => {
   <div class="flex flex-col w-full gap-2">
    <div class="flex justify-between ">
     <div class="flex flex-col">
-      <h3 class="text-[16px] font-bold text-[#212529]">{{ title }}</h3>
+      <h3 class="text-[16px] font-bold text-[#212529] flex items-start justify-start">{{ title }}</h3>
 
       <p class="text-xs text-[#212529] text-wrap  lg:w-[325px]  lg:flex md:flex">
         {{ paracontent }}

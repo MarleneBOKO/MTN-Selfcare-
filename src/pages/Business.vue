@@ -14,7 +14,6 @@
         :style="{
           height: expandedStates[0] && isSmallScreen ? '217px' : (isSmallScreen ? '95px' : '217px'), 
           width: '100%', 
-      
         }"
       >
         <!-- Titre visible uniquement sur petit écran quand non-expandé -->
@@ -27,7 +26,7 @@
 
         <div class="absolute left-0 top-[20px] h-[20px] bg-[#ffcc01] w-[10px]"></div>
         <!-- Composant UnpaidTotalCard -->
-        <div v-if="expandedStates[0] || !isSmallScreen" class="flex justify-center">
+        <div v-if="expandedStates[0] || !isSmallScreen" class="flex flex-col items-center flex-1">
           <UnpaidTotalCard
             title="Total des ventes"
             contentText="Disponibilité limitée"
@@ -59,7 +58,7 @@
           Consommation du compte
         </div>
           <div class="absolute left-0 top-[20px] h-[20px] bg-[#ffcc01] w-[10px]"></div>
-        <div v-if="expandedStates[1] || !isSmallScreen">
+        <div v-if="expandedStates[1] || !isSmallScreen" class="flex flex-col items-center flex-1">
           <UnpaidTotalCard
             title="Consommation du compte"
             contentText="Aucune consommation disponible pour ce compte"
@@ -87,7 +86,7 @@
           Consommation des services
         </div>
           <div class="absolute left-0 top-[20px] h-[20px] bg-[#ffcc01] w-[10px]"></div>
-          <div v-if="expandedStates[2] || !isSmallScreen">
+          <div v-if="expandedStates[2] || !isSmallScreen" class="flex flex-col items-center flex-1">
             <UnpaidTotalCard
             title="Consommation des services"
             contentText="Aucune consommation disponible pour ce compte"
@@ -120,7 +119,7 @@
           :style="{
           height: expandedStates[3] && isSmallScreen ? '50px' : (isSmallScreen ? '25px' : '50px'), 
         }" ></div>
-          <div v-if="expandedStates[3] || !isSmallScreen">
+          <div v-if="expandedStates[3] || !isSmallScreen" class="flex flex-col items-center flex-1">
             <UnpaidTotalCard
             title="Liste des factures"
             contentText="Aucune facture disponible"
@@ -149,7 +148,7 @@
           Mini relevé de compte
         </div>
           <div class="absolute left-0 top-[20px] h-[20px] bg-[#ffcc01] w-[10px]"></div>
-          <div v-if="expandedStates[4] || !isSmallScreen" style="display: flex;  justify-content: center;">
+          <div v-if="expandedStates[4] || !isSmallScreen" class="flex flex-col items-center flex-1">
             <UnpaidTotalCard
             title="Mini relevé de compte"
             contentText="Aucun relevé disponible"
