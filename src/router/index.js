@@ -11,12 +11,14 @@ import ProfilActivite from '../pages/ProfilActivite.vue';
 import ProfilApp from '../pages/ProfilApp.vue';
 import Search from '../pages/Search.vue';
 const routes = [
-  { path: '/', component: Home, name: 'Home' },
-  { path: '/business', component: Business, name: 'Business' },
-  { path: '/forfait', component: Forfait, name: 'Forfait' },
-  { path: '/carte', component: Carte, name: 'Carte' },
-  { path: '/consommation', component: Consommation, name: 'Consommation' },
-  { path: '/search', component: Search, name: 'Search' },
+  { path: '/', component: Home, name: 'Home', meta: { pageTitle: 'Mon Compte | MyMTN Web' } },
+  { path: '/business', component: Business, name: 'Business', meta: { pageTitle: 'MTN Business | MyMTN Web' } },
+  { path: '/forfait', component: Forfait, name: 'Forfait', meta: { pageTitle: 'Forfaits & services | MyMTN Web' } },
+  { path: '/carte', component: Carte, name: 'Carte', meta: { pageTitle: 'Gérer ma carte | MyMTN Web' } },
+  { path: '/consommation', component: Consommation, name: 'Consommation', meta: { pageTitle: 'Ma Consommation | MyMTN Web' } },
+  { path: '/search', component: Search, name: 'Search', meta: { pageTitle: 'Recherche | MyMTN Web' } },
+
+
 
   
   {
