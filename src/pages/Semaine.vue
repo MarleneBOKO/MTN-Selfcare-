@@ -31,7 +31,6 @@
            </h2>
            
            <!-- Afficher le contenu de l'accordéon uniquement s'il est ouvert -->
-           <!-- Afficher le contenu de l'accordéon uniquement s'il est ouvert -->
       <div v-if="openIndex === index" class="p-5 bg-[#f4f4f4]">
         <div class="flex items-center gap-4 mt-2">
           <div class="flex flex-col w-[48%] p-[10px] bg-white border border-solid border-[#ced4d9] rounded-[7px] cursor-pointer">
@@ -67,48 +66,50 @@
         <div class="mt-4">
           <label class="font-bold">Sélectionnez un mode de paiement</label>
           <div class="flex items-center mt-1">
-            <!-- Bouton radio pour "Compte principal" -->
-            <input
-              value="main"
-              name="mode_INTERNET_100"
-              type="radio"
-              v-model="optionmomo"
-              class="w-0 h-0"
-            />
-            <span
-              :class="{
-                'bg-yellow-100': optionmomo === 'main',
-                'border-yellow-400': optionmomo === 'main',
-                'bg-white': optionmomo !== 'main',
-                'border-[#ced4d9]': optionmomo !== 'main'
-              }"
-              class="flex justify-center cursor-pointer items-center w-7 h-7 rounded-full mr-2 border-[3px]"
-            >
-              <i class="kgk-mtn-BW_Icons_MTNBusiness_Mobility_4 text-black"></i>
-            </span>
-            <span class="text-sm font-medium text-gray-700">Compte principal</span>
+          <!-- Bouton radio pour "Compte principal" -->
+          <input
+            type="radio"
+            value="main"
+            name="mode_INTERNET_100"
+            v-model="optionmomo"
+            class="w-0 h-0"
+          />
+          <span
+            :class="{
+              'bg-yellow-100': optionmomo === 'main',
+              'border-yellow-400': optionmomo === 'main',
+              'bg-white': optionmomo !== 'main',
+              'border-[#ced4d9]': optionmomo !== 'main',
+            }"
+            class="flex justify-center cursor-pointer items-center w-7 h-7 rounded-full mr-2 border-[3px]"
+            @click="optionmomo = 'main'"
+          >
+            <i class="kgk-mtn-BW_Icons_MTNBusiness_Mobility_4 text-black"></i>
+          </span>
+          <span class="text-sm font-medium text-gray-700">Compte principal</span>
 
-            <!-- Bouton radio pour "Mobile Money" -->
-            <input
-              type="radio"
-              :name="'mode_WABAA_' + item.title"
-              value="MO"
-              v-model="optionmomo"
-              class="w-0 h-0"
-            />
-            <span
-              :class="{
-                'bg-yellow-100': optionmomo === 'MO',
-                'border-yellow-400': optionmomo === 'MO',
-                'bg-white': optionmomo !== 'MO',
-                'border-[#ced4d9]': optionmomo !== 'MO'
-              }"
-              class="ml-5 flex justify-center cursor-pointer items-center w-7 h-7 rounded-full mr-2 border-[3px]"
-            >
-              <i class="kgk-mtn-BW_Icons_MTNBusiness_Mobility_4 text-black"></i>
-            </span>
-            <span class="ml-2 text-sm">Mobile Money</span>
-          </div>
+          <!-- Bouton radio pour "Mobile Money" -->
+          <input
+            type="radio"
+            value="MO"
+            name="mode_INTERNET_100"
+            v-model="optionmomo"
+            class="w-0 h-0"
+          />
+          <span
+            :class="{
+              'bg-yellow-100': optionmomo === 'MO',
+              'border-yellow-400': optionmomo === 'MO',
+              'bg-white': optionmomo !== 'MO',
+              'border-[#ced4d9]': optionmomo !== 'MO',
+            }"
+            class="ml-5 flex justify-center cursor-pointer items-center w-7 h-7 rounded-full mr-2 border-[3px]"
+            @click="optionmomo = 'MO'" 
+          >
+            <i class="kgk-mtn-BW_Icons_MTNBusiness_Mobility_4 text-black"></i>
+          </span>
+          <span class="ml-2 text-sm">Mobile Money</span>
+        </div>
         </div>
 
         <div class="flex justify-between mt-6">
