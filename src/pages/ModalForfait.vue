@@ -5,6 +5,7 @@ import Semaine from "./Semaine.vue";
 import Mois from "./Mois.vue";
 import Big from "./Big.vue";
 import Illimite from "./Illimite.vue";
+
 const props = defineProps({
   isOpen: {
     type: Boolean,
@@ -20,26 +21,49 @@ const props = defineProps({
 
 const emit = defineEmits(["close"]);
 
+let isOpen = ref(props.isOpen);
+let isVisible = ref(props.isOpen);
+
+// Fonction pour fermer le modal avec un délai
 const closeModal = () => {
-  emit("close");
+  // Déclenche l'animation de fermeture et après 500ms, cache le modal
+  isOpen.value = false;
+  setTimeout(() => {
+    isVisible.value = false;
+  }, 500); // Assure-toi que le modal est masqué après la durée de l'animation
 };
 
-const activeSection = ref("Jours"); 
+// Utilisation du watch pour observer le changement de `isOpen`
+watch(
+  () => props.isOpen,
+  (newValue) => {
+    if (newValue) {
+      isVisible.value = true; // Affiche le modal
+      setTimeout(() => {
+        isOpen.value = true; // Lancement de l'animation de glissement
+      }, 50); // Un petit délai pour permettre au DOM de se mettre à jour
+    } else {
+      // Déclenche la fermeture avec animation
+      isOpen.value = false;
+    }
+  }
+);
+
+const activeSection = ref("Jours");
 const activeComponent = ref(Jours);
 
 const sectionsByTitle = {
   Wabaa: ["Jours", "Semaines", "Mois"],
-  Internet: ["Jours", "Semaines", "Mois", "Illimite"], // "Illimite" inclus
+  Internet: ["Jours", "Semaines", "Mois", "Illimite"],
   "Yellow Game": ["Jours"],
-  Maxi: ["Jours", "Semaines", "Mois", "Big"],          // "Big" inclus
+  Maxi: ["Jours", "Semaines", "Mois", "Big"],
   GoPack: ["Jours", "Semaines", "Mois"],
 };
-
 
 const availableSections = ref([]);
 
 const setActiveSection = (section) => {
-  activeSection.value = section; 
+  activeSection.value = section;
   switch (section) {
     case "Semaines":
       activeComponent.value = Semaine;
@@ -58,10 +82,9 @@ const setActiveSection = (section) => {
   }
 };
 
-
 const updateSections = () => {
   availableSections.value = sectionsByTitle[props.modalTitle] || [];
-  activeSection.value = availableSections.value[0] || "Jours"; 
+  activeSection.value = availableSections.value[0] || "Jours";
   setActiveSection(activeSection.value);
 };
 
@@ -72,8 +95,14 @@ updateSections();
 
 <template>
   <div>
-    <div v-if="isOpen" class="fixed inset-0 z-50 bg-black bg-opacity-50">
-      <div class="fixed lg:top-0 lg:left-0 top-[20%] left-0 z-50 lg:h-full overflow-y-auto bg-white shadow-lg w-full md:w-[40%] lg:bottom-0 h-[80%]">
+    <div v-if="isVisible" class="fixed inset-0 z-50 bg-black bg-opacity-50">
+      <div
+        :class="[
+          'transition-all duration-500 ease-in-out',
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        ]"
+        class="fixed lg:top-0 lg:right-0 top-[20%] right-0 z-50 lg:h-full overflow-y-auto bg-white shadow-lg w-full md:w-[40%] lg:bottom-0 h-[80%]"
+      >
         <header class="flex items-center justify-between p-4 border-b bg-[#ffcc01] py-[15px] px-[20px] relative">
           <strong class="text-lg font-bold">{{ modalTitle }}</strong>
         </header>
@@ -99,15 +128,19 @@ updateSections();
         </div>
       </div>
       <button
-          @click="closeModal"
-          class="text-[#bfbfbf] justify-center items-center flex bg-white rounded-full h-[30px] w-[30px] absolute lg:right-[860px] lg:top-3 top-[15%] right-2"        >
-          <svg viewBox="0 0 16 16" class="w-5 h-5">
-            <path
-              fill="currentColor"
-              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
-            ></path>
-          </svg>
-        </button>
+        @click="closeModal" @click.stop
+        class="text-[#bfbfbf] justify-center items-center flex bg-white rounded-full h-[30px] w-[30px] absolute lg:right-[860px] lg:top-3 top-[15%] right-2"
+      >
+        <svg viewBox="0 0 16 16" class="w-5 h-5">
+          <path
+            fill="currentColor"
+            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+          ></path>
+        </svg>
+      </button>
     </div>
   </div>
 </template>
+
+<style scoped>
+</style>

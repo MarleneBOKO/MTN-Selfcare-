@@ -6,9 +6,7 @@
         <p class="mb-4 text-[16px] text-[#6c757d]">Numéro de compte:</p>
       </div>
       <div class="grid w-full gap-6 lg:grid-cols-3">
-    <!-- Première colonne -->
     <div class="flex flex-col gap-8">
-      <!-- Première carte -->
       <div 
         class="p-5 bg-white rounded-xl relative min-lg:h-[217px] h-[95px] flex lg:flex-col md:flex-col justify-between lg:justify-start mb:justify-center"
         :style="{
@@ -16,7 +14,6 @@
           width: '100%', 
         }"
       >
-        <!-- Titre visible uniquement sur petit écran quand non-expandé -->
         <div 
           v-if="isSmallScreen && !expandedStates[0]" 
           class="text-[16px] font-bold text-[#212529] "
@@ -25,16 +22,16 @@
         </div>
 
         <div class="absolute left-0 top-[20px] h-[20px] bg-[#ffcc01] w-[10px]"></div>
-        <!-- Composant UnpaidTotalCard -->
         <div v-if="expandedStates[0] || !isSmallScreen" class="flex flex-col items-center flex-1">
           <UnpaidTotalCard
             title="Total des ventes"
             contentText="Disponibilité limitée"
-            icon="material-symbols:business-center-sharp"
+            iconClass="mdi icon mdi-briefcase-variant"
             paracontent=""
+            :loading="isLoading"
+
           />
         </div>
-        <!-- Icône et toggle sur petit écran quand expandé -->
         <div
           class="w-[30px] h-[30px] rounded-full border-2 border-solid border-[#ccc] flex items-center justify-center lg:hidden md:hidden cursor-pointer"
           @click="toggleExpand(0)"
@@ -62,8 +59,10 @@
           <UnpaidTotalCard
             title="Consommation du compte"
             contentText="Aucune consommation disponible pour ce compte"
-            icon="material-symbols:business-center-sharp"
+            iconClass="mdi icon mdi-briefcase-variant"
             paracontent=""
+            :loading="isLoading"
+
           />
         </div>
         <div
@@ -90,8 +89,10 @@
             <UnpaidTotalCard
             title="Consommation des services"
             contentText="Aucune consommation disponible pour ce compte"
-            icon="material-symbols:business-center-sharp"
+            iconClass="mdi icon mdi-briefcase-variant"
             paracontent=""
+            :loading="isLoading"
+
           />
         </div>
         <div
@@ -123,8 +124,10 @@
             <UnpaidTotalCard
             title="Liste des factures"
             contentText="Aucune facture disponible"
-            icon="material-symbols:business-center-sharp"
+            iconClass="mdi icon mdi-briefcase-variant"
             paracontent="Veuillez cocher les factures que vous souhaitez payer"
+            :loading="isLoading"
+
           />
         </div>
         <div
@@ -152,8 +155,10 @@
             <UnpaidTotalCard
             title="Mini relevé de compte"
             contentText="Aucun relevé disponible"
-            icon="material-symbols:business-center-sharp"
+            iconClass="mdi icon mdi-briefcase-variant"
             paracontent=""
+            :loading="isLoading"
+
           />
         </div>
         <div
@@ -174,6 +179,13 @@
 import UnpaidTotalCard from './UnpaidTotalCard.vue';
 import { ref, onMounted, onUnmounted } from "vue";
 
+const isLoading = ref(true); 
+
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false; 
+  }, 3000);
+});
 const expandedStates = ref([false, false, false, false, false]);
 const isSmallScreen = ref(window.innerWidth < 1024);
 

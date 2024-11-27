@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import OperationItem from './OperationItem.vue';
 import ModalInfo from './ModalInfo.vue';
 import ModalForfait from './ModalForfait.vue';
@@ -15,6 +15,13 @@ const props = defineProps({
     type: String,
     required: true
   },
+});
+const isLoading = ref(true); 
+
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false; 
+  }, 3000);
 });
 
 const modalData = {
@@ -61,26 +68,40 @@ const toggleModal = (title = null) => {
   boldText="Wabaa" 
   paragraphText="" 
   @click="toggleModal('Wabaa')" 
+  :loading="isLoading"
+class="cursor-pointer"
 />
 <OperationItem 
   boldText="Internet" 
   paragraphText="" 
   @click="toggleModal('Internet')" 
+  :loading="isLoading"
+  class="cursor-pointer"
+
 />
 <OperationItem 
   boldText="Yellow Game" 
   paragraphText="" 
   @click="toggleModal('Yellow Game')" 
+  :loading="isLoading"
+  class="cursor-pointer"
+
 />
 <OperationItem 
   boldText="Maxi" 
   paragraphText="" 
   @click="toggleModal('Maxi')" 
+  :loading="isLoading"
+  class="cursor-pointer"
+
 />
 <OperationItem 
   boldText="GoPack" 
   paragraphText="" 
   @click="toggleModal('Gopack')" 
+  :loading="isLoading"
+  class="cursor-pointer"
+
 />
       </div>
       <div>

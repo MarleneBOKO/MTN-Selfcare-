@@ -1,4 +1,3 @@
-<!-- Navbar.vue -->
 <template>
     <nav class="fixed justify-between flex flex-col top-0 left-0  p-4 text-white bg-[#fc0] pt-[60px] pb-[30px] px-[30px] overflow-hidden h-[100%]">
       <svg width="73" height="49" viewBox="0 0 73 49" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: -12px; left: -12px;"><path d="M24.7571 -23.1649C-1.71282 -40.7095 -29.0276 -46.0964 -36.2517 -35.1972C-43.4759 -24.298 -27.8742 -1.23933 -1.40425 16.3053C25.0657 33.8499 52.3802 39.2373 59.6046 28.3376C66.8287 17.4385 51.2271 -5.62026 24.7571 -23.1649Z" fill="#FAA61A"></path></svg>
@@ -23,47 +22,40 @@
       <ul class="flex flex-col gap-2">
 
         <li class="flex items-center">          
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="black" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"/></svg>
-          <router-link to="/" class="w-full px-4 py-2 text-base text-black" active-class="font-bold">
+          <i data-v-453dbfae="" class="text-black kgk-mtn-home" style="font-size: 22px;"></i>
+                    <router-link to="/" class="w-full px-4 py-2 text-base text-black" active-class="font-bold">
             Accueil
           </router-link>
         </li>
         
         <li class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-          <path fill="black" d="M4 21q-.825 0-1.412-.587T2 19v-4h7v2h6v-2h7v4q0 .825-.587 1.413T20 21zm7-6v-2h2v2zm-9-2V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v5h-7v-2H9v2zm8-7h4V4h-4z"/>
-        </svg>
+          <i data-v-453dbfae="" class="text-black kgk-mtn-BW_Icons_MTNBusiness_4" style="font-size: 22px;"></i>
           <router-link to="/business" class="w-full text-base text-[#212543] px-4 py-2 " active-class="font-bold">
             MTN Business
           </router-link>
         </li>
        
         <li class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
-            <defs><mask id="ipTSimCard0"><g fill="none">
-            <path stroke="#fff" stroke-width="4" d="M10 44h28a2 2 0 0 0 2-2V14.885a2 2 0 0 0-.655-1.48L29.572 4.52A2 2 0 0 0 28.227 4H10a2 2 0 0 0-2 2v36a2 2 0 0 0 2 2Z"/><circle cx="17" cy="14" r="3" fill="#fff"/><path fill="#555" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M16 23h16v14H16z"/></g></mask></defs><path fill="black" d="M0 0h48v48H0z" mask="url(#ipTSimCard0)"/>
-           </svg>
+          <i data-v-453dbfae="" class="text-black kgk-mtn-sim-card" style="font-size: 22px;"></i>
           <router-link to="/carte" class="w-full text-base px-4 py-2  text-[#212543] " active-class="font-bold">
             Carte SIM
           </router-link>
         </li>
 
         <li class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 2048 2048"><path fill="black" d="M1185 1179q-88-75-195-115t-222-40q-88 0-170 23t-153 64t-129 100t-100 130t-65 153t-23 170H0q0-120 35-231t101-205t156-167t204-115q-113-74-176-186t-64-248q0-106 40-199t109-163T568 40T768 0t199 40t163 109t110 163t40 200q0 66-16 129t-48 119t-75 103t-101 83q65 25 124 61t111 81zM384 512q0 80 30 149t82 122t122 83t150 30q79 0 149-30t122-82t83-122t30-150q0-79-30-149t-82-122t-123-83t-149-30q-80 0-149 30t-122 82t-83 123t-30 149m1344 256q66 0 124 25t101 69t69 102t26 124t-25 124t-69 102t-102 69t-124 25q-23 0-45-3l-587 587q-27 27-62 41t-74 15q-40 0-75-15t-61-41t-41-61t-15-75q0-38 14-73t42-63l587-587q-3-22-3-45q0-66 25-124t68-101t102-69t125-26m0 512q40 0 75-15t61-41t41-61t15-75q0-41-19-82l-146 146h-91v-91l146-146q-41-19-82-19q-40 0-75 15t-61 41t-41 61t-15 75q0 41 19 82l-640 641q-19 19-19 45t19 45t45 19t45-19l641-640q41 19 82 19"/></svg>
-          <router-link to="/forfait" class="w-full text-base text-nowrap text-[#212543] px-4 py-2 " active-class="font-bold">
+          <i data-v-453dbfae="" class="text-black kgk-mtn-BW_Icons_MTNPlay_Social_4" style="font-size: 22px;"></i>
+                    <router-link to="/forfait" class="w-full text-base text-nowrap text-[#212543] px-4 py-2 " active-class="font-bold">
             Forfaits & services
           </router-link>
         </li>
         <li class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none" stroke="black" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 7h1"/><path d="M2 17.714V6.286C2 5.023 2.995 4 4.222 4h15.556C21.005 4 22 5.023 22 6.286v11.428C22 18.977 21.005 20 19.778 20H4.222C2.995 20 2 18.977 2 17.714Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M11.667 9L10 12h4l-1.667 3"/></g></svg>
-          <router-link to="/consommation" class="w-full text-base  text-[#212543] px-4 py-2 " active-class="font-bold">
+          <i data-v-453dbfae="" class="text-black kgk-mtn-receipt" style="font-size: 22px;"></i>
+                    <router-link to="/consommation" class="w-full text-base  text-[#212543] px-4 py-2 " active-class="font-bold">
             Consommation
           </router-link>
         </li>
           <li class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-              <path fill="black" fill-rule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clip-rule="evenodd"/>
-            </svg>
+            <i data-v-453dbfae="" class="text-black kgk-mtn-BW_Icons_MyMTN_4" style="font-size: 22px;"></i>
             <router-link
               to="/profil"
               target="_blank"
@@ -77,13 +69,12 @@
       </ul>
       </div>
       <div class="flex py-[15px] px-0 border-2 gap-1 border-t-[#d3ad13] border-b-0 border-x-0 fixed bottom-0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="#b81e50" stroke-width="2" d="M13 9V2H1v20h12v-7m9-3H5m12-5l5 5l-5 5"/></svg>
-        <span class="text-[#b81e50] font-bold">Déconnexion</span>
+        <i data-v-453dbfae="" class="mdi mdi-logout text-[#b81e50]" style="font-size: 22px;"></i>
+                <span class="text-[#b81e50] font-bold">Déconnexion</span>
       </div>
     </nav>
   </template>
   
   <script setup>
-  // Pas besoin de script ici car tout est statique
   </script>
   

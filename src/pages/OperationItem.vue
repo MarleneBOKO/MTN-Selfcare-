@@ -9,7 +9,11 @@ const props = defineProps({
   paragraphText: {
     type: String,
     required: true
-  }
+  },
+  loading: {
+    type: Boolean,
+    default: false, 
+  },
 });
 
 const emit = defineEmits(['showModal']);
@@ -20,7 +24,9 @@ const handleClick = () => {
 </script>
 
 <template>
-  <div class="flex lg:flex-col md:flex-col flex-row rounded-[15px] bg-white overflow-hidden w-full lg:items-stretch items-center md:items-stretch">
+  <div class="flex lg:flex-col md:flex-col flex-row rounded-[15px] bg-white overflow-hidden w-full lg:items-stretch items-center md:items-stretch"  
+  
+  >
   <!-- Section Texte -->
   <div class="flex flex-col justify-center p-[15px] gap-1 flex-grow">
     <h3 class="text-[16px] text-black whitespace-nowrap font-bold">{{ boldText }}</h3>

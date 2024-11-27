@@ -2,21 +2,9 @@
   import { Icon } from '@iconify/vue';  
 
   const props = defineProps({
-  icon: {
+    iconClass: {
     type: String,
-    required: true
-  },
-  iconWidth: {
-    type: Number,
-    default: 36
-  },
-  iconHeight: {
-    type: Number,
-    default: 36
-  },
-  iconFill: {
-    type: String,
-    default: 'black'
+    required: true // Classe CSS de l'icône
   },
   title: {
     type: String,
@@ -29,9 +17,14 @@
   paracontent: {
     type: String,
     default: 'Additional content paragraph'
-  }
-  
+  },
+  loading: {
+    type: Boolean,
+    default: false, 
+  },
 });
+  
+
 
 import { ref, onMounted, onUnmounted } from "vue";
 
@@ -60,9 +53,11 @@ onUnmounted(() => {
   <div class="flex flex-col w-full gap-2">
    <div class="flex justify-between ">
     <div class="flex flex-col">
-      <h3 class="text-[16px] font-bold text-[#212529] flex items-start justify-start">{{ title }}</h3>
+      <h3 class="text-[16px] font-bold text-[#212529] flex items-start justify-start"         :class="{ ' text-transparent animate-pulse mt-2 ': loading }"
+      >{{ title }}</h3>
 
-      <p class="text-xs text-[#212529] text-wrap  lg:w-[325px]  lg:flex md:flex">
+      <p class="text-xs text-[#212529] text-wrap  lg:w-[325px]  lg:flex md:flex"         :class="{ 'bg-gray-200 text-transparent animate-pulse w-[100%] h-[21px]': loading }"
+      >
         {{ paracontent }}
       </p>
     </div>
@@ -72,14 +67,33 @@ onUnmounted(() => {
     <div
       class="flex flex-col items-center justify-center w-full gap-3 py-4 text-center "
     >
-      <Icon :icon="icon" :width="iconWidth" :height="iconHeight" :color="iconFill"  class="items-center "/>
-      <h3 class="text-[15px] font-medium text-wrap  text-center">{{ contentText }}</h3>
+    <i v-if="!loading" :class="iconClass" class="items-center text-center text-[50px] text-black" ></i>
+    <div
+          v-else
+          class="w-full bg-gray-200 h-[21px] animate-pulse"
+        ></div>
+    <h3 class="text-[15px] font-medium text-wrap  text-center"
+    :class="{ 'bg-gray-200 text-transparent animate-pulse  w-[100%] h-[21px]': loading }"
+    >{{ contentText }}</h3>
     </div>
   </div>
 </template>
   
   
   <style scoped>
-  /* Ajoutez des styles personnalisés si nécessaire */
-  </style>
+.animate-pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}  </style>
   

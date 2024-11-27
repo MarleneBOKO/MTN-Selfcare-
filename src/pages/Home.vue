@@ -7,35 +7,37 @@
     
         <div class="grid w-full grid-cols-2 gap-8 lg:grid-cols-4 md:grid-cols-2">
           <ConsommationItem
-            icon="mage:phone-call" 
+            iconClass="kgk-mtn-BW_Icons_MyMTN_Voice_4"
             spanText="Appels"
             boldText="00:00:00"
             paragraphText="0 FCFA"
+             :loading="isLoading"
           />
           <ConsommationItem
-            icon="subway:sms-8"  
+          iconClass="kgk-mtn-BW_Icons_MyMTN_SMS_4"
             spanText="SMS"
             boldText="0"
             paragraphText="0 FCFA"
+             :loading="isLoading"
           />
           <ConsommationItem
-           icon="fluent-mdl2:c-r-m-services"
+           iconClass="kgk-mtn-BW_Icons_MTNPlay_Social_4"
             spanText="Autres"
             boldText="0 FCFA"
             paragraphText=""
+             :loading="isLoading"
           />
           <ConsommationItem
-            icon="arcticons:internet-speed-meter"
+            iconClass="kgk-mtn-BW_Icons_MyMTN_Data_4"
             spanText="Internet"
             boldText="0 MB"
             paragraphText=""
+             :loading="isLoading"
           />
         </div>
         <router-link to="/consommation" class="text-[#106887] cursor-pointer text-sm flex items-center justify-end w-full gap-1 px-[15px] mt-6">
           Voir plus
-          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32">
-            <path fill="#106887" d="m18 6l-1.43 1.393L24.15 15H4v2h20.15l-7.58 7.573L18 26l10-10z" />
-          </svg>
+          <i data-v-c3c0fa0a="" class="mdi mdi-arrow-right text-[18px] text-[#106887] text-center" ></i>
         </router-link>
       </div>
       <div class="flex flex-col justify-between">
@@ -70,24 +72,31 @@
             boldText="MTN Infos carte SIM"
             paragraphText=" Informations perso liées à la SIM "
             @click="toggleModal"
+            class="cursor-pointer"
           /></div>
           <div class="min-w-[190px]">
           <OperationItem
             boldText="PUK"
             paragraphText=" Récupérer mon code PUK "
              @showModal="openModal"
+             class="cursor-pointer"
+
           /></div>
           <div class="min-w-[190px]">
           <OperationItem
             boldText="Activer internet"
             paragraphText=" Recevoir les paramètres internet "
              @showModal="openModal"
+             class="cursor-pointer"
+
           /></div>
           <div class="min-w-[190px]">
           <OperationItem
             boldText="Désactiver internet"
             paragraphText=" Désactiver internet sur ma SIM "
              @showModal="openModal"
+             class="cursor-pointer"
+
           /></div>
         </div>
                   <ModalYellow 
@@ -101,9 +110,7 @@
                />        
                <router-link to="/carte" class="text-[#106887] cursor-pointer text-sm flex items-center justify-end w-full gap-1 px-[15px] mt-6">
           Voir plus
-          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32">
-            <path fill="#106887" d="m18 6l-1.43 1.393L24.15 15H4v2h20.15l-7.58 7.573L18 26l10-10z" />
-          </svg>
+          <i data-v-c3c0fa0a="" class="mdi mdi-arrow-right text-[18px] text-[#106887] text-center" ></i>
         </router-link>
         </div>
       </div>
@@ -116,33 +123,16 @@
     <h3 class="text-[16px] font-bold ">Infos carte SIM</h3>
     <div class="flex flex-col gap-6">
       <div class="py-[15px] px-0 border border-[#e1e0e0] border-x-0 mt-[15px] items-center gap-3  flex">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
-          <defs>
-            <mask id="ipTSimCard0">
-              <g fill="none">
-                <path stroke="#fff" stroke-width="4" d="M10 44h28a2 2 0 0 0 2-2V14.885a2 2 0 0 0-.655-1.48L29.572 4.52A2 2 0 0 0 28.227 4H10a2 2 0 0 0-2 2v36a2 2 0 0 0 2 2Z" />
-                <circle cx="17" cy="14" r="3" fill="#fff" />
-                <path fill="#555" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M16 23h16v14H16z" />
-              </g>
-            </mask>
-          </defs>
-          <path fill="black" d="M0 0h48v48H0z" mask="url(#ipTSimCard0)" />
-        </svg>
+        <i data-v-461d4ec4="" class="text-black kgk-mtn-sim-card" style="font-size:22px;"></i>
+
         <div class="flex items-center justify-center gap-1">
           <span>53843978</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-            <g fill="none" stroke="#4c95cd" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-              <path d="M3 12c0 -4.97 4.03 -9 9 -9c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9Z" />
-              <path stroke-dasharray="14" stroke-dashoffset="14" d="M8 12l3 3l5 -5">
-                <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="14;0" />
-              </path>
-            </g>
-          </svg>
+          <i data-v-461d4ec4="" class="ml-1 kgk-mtn-verified" style="color: rgb(20, 182, 237);"></i>
         </div>
     </div>
     <button @click="toggleModal" class="w-full rounded-[30px] items-center h-[35px] justify-center text-[#106887] border border-[#106887] text-sm px-[15px] hover:bg-[#6494a5] hover:border-[#106887]">Afficher les détails</button>
-    <ModalInfo :isOpen="isModalOpen" @close="toggleModal" />
-  </div>
+    <ModalInfo  :isOpen="isModalOpen"  @close="toggleModal" />
+      </div>
   </div>
   <div class="bg-white p-[20px] rounded-[12px] mb-[30px] flex flex-col min-w-[300px] h-[74px] relative ">
     <div class="absolute left-0 h-[20px] top-[20px] bg-[#ffcc01] w-[10px] "></div>
@@ -158,7 +148,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import ConsommationItem from './ConsommationItem.vue'
 import OperationItem from './OperationItem.vue';
 import ModalInfo from './ModalInfo.vue';
@@ -170,7 +160,13 @@ const modalTitle = ref('');
 const modalContent = ref({});
 const showNoSubscription = Math.random() < 0.5;
 const isModalOpen = ref(false);
+const isLoading = ref(true); // État de chargement
 
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false; 
+  }, 3000);
+});
 const toggleModal = () => {
   isModalOpen.value = !isModalOpen.value;
 };

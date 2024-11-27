@@ -1,5 +1,5 @@
 <script setup>
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   
   const props = defineProps({
     isOpen: {
@@ -13,12 +13,40 @@
   const closeModal = () => {
     emit('close');
   };
+  const isVisible = ref(false);
+
+// Appliquer un délai avant de rendre visible le modal
+onMounted(() => {
+  setTimeout(() => {
+    isVisible.value = true;
+  }, 100); // Vous pouvez ajuster ce délai selon votre préférence
+});
+
+const handleClose = () => {
+  isVisible.value = false;
+  setTimeout(() => {
+    emit('close');
+  }, 100); // Correspond à la durée de la transition
+};
   </script>
 
 <template>
+    <transition 
+    name="smooth-slide"
+    enter-active-class="transition-all duration-300 ease-out transform"
+    leave-active-class="transition-all duration-300 ease-in transform"
+    enter-from-class="scale-95 translate-y-full opacity-0 md:translate-y-0 md:-translate-y-full"
+    enter-to-class="scale-100 translate-y-0 opacity-100"
+    leave-from-class="scale-100 translate-y-0 opacity-100"
+    leave-to-class="scale-95 translate-y-full opacity-0 md:translate-y-0 md:-translate-y-full"
+  >
     <div  v-if="isOpen"  class="absolute inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50">
       <div class="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-center lg:inset-0 md:inset-0">
-        <div class="bg-white lg:rounded-md md:rounded-md shadow-lg lg:w-[500px] lg:h-[310px] w-full h-full md:w-[500px] md:h-[310px]">
+        <div 
+        class="absolute inset-0 bg-black bg-opacity-50"
+        @click="handleClose"
+      ></div>
+        <div class="bg-white z-40 lg:rounded-md md:rounded-md shadow-lg lg:w-[500px] lg:h-[310px] w-full h-full md:w-[500px] md:h-[310px]">
           <header class="flex lg:rounded-t-md md:rounded-t-md items-center justify-between p-4 border-b h-[62px] bg-[#ffcc01]">
             <h5 class="text-xl font-bold">Changer mon code de transfert</h5>
           </header>
@@ -44,11 +72,19 @@
           </form>
         </div>
         </div>
+        <button 
+            @click="handleClose" 
+            aria-label="Close" 
+            class="absolute z-40 cursor-pointer top-[-20%] right-2 sm:top-14 lg:top-[25%] lg:right-[30%] md:top-[25%] md:right-[30%] w-[30px] h-[30px] text-black bg-white rounded-full hover:bg-opacity-80 flex items-center justify-center"
+          >
+            &times;
+          </button>
       </div>
-      <div class="fixed inset-0 bg-black bg-opacity-50"></div>
-      <button @click="closeModal" @click.stop aria-label="Close" class="absolute  top-[45%] right-2 sm:top-14 lg:top-2 lg:right-[-40px] md:top-2 md:right-[-40px] w-[30px] h-[30px] text-black font-bold bg-white rounded-full hover:bg-opacity-80 flex items-center justify-center">&times; </button>
+      
 
     </div>
+  </transition>
+
 </template>
 
 
