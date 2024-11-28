@@ -94,36 +94,41 @@ updateSections();
 </script>
 
 <template>
-  
   <div>
     <div v-if="isVisible" class="fixed inset-0 z-50 bg-black bg-opacity-50">
-      <div
-        class="fixed lg:top-0 lg:right-0 top-[20%] right-0 z-50 lg:h-full overflow-y-auto bg-white shadow-lg w-full md:w-[40%] lg:bottom-0 h-[80%]"
+      <transition
+        name="slide-modal"
+        @after-leave="isVisible = false" 
       >
-        <header class="flex items-center justify-between p-4 border-b bg-[#ffcc01] py-[15px] px-[20px] relative">
-          <strong class="text-lg font-bold">{{ modalTitle }}</strong>
-        </header>
-        <div class="p-[15px]">
-          <div class="flex justify-between bg-[#f4f4f4] p-[15px] items-center rounded-[50px] h-[52px]">
-            <div
-              v-for="section in availableSections"
-              :key="section"
-              :class="{
-                'text-[#6c757d] bg-white rounded-[50px] h-[38px] w-[174px] justify-center items-center max-w-full':
-                  activeSection === section,
-                'text-gray-700': activeSection !== section
-              }"
-              class="text-sm flex items-center px-[5px] py-[7px] rounded-[50px] cursor-pointer h-[38px] w-[174px] justify-center"
-              @click="setActiveSection(section)"
-            >
-              {{ section }}
+        <div
+          v-if="isOpen"
+          class="fixed lg:top-0 lg:right-0 top-[20%] right-0 z-50 lg:h-full overflow-y-auto bg-white shadow-lg w-full md:w-[40%] lg:bottom-0 h-[80%]"
+        >
+          <header class="flex items-center justify-between p-4 border-b bg-[#ffcc01] py-[15px] px-[20px] relative">
+            <strong class="text-lg font-bold">{{ modalTitle }}</strong>
+          </header>
+          <div class="p-[15px]">
+            <div class="flex justify-between bg-[#f4f4f4] p-[15px] items-center rounded-[50px] h-[52px]">
+              <div
+                v-for="section in availableSections"
+                :key="section"
+                :class="{
+                  'text-[#6c757d] bg-white rounded-[50px] h-[38px] min-w-[174px] justify-center items-center w-full':
+                    activeSection === section,
+                  'text-gray-700': activeSection !== section
+                }"
+                class="text-sm flex items-center px-[5px] py-[7px] rounded-[50px] cursor-pointer h-[38px] w-[174px] justify-center"
+                @click="setActiveSection(section)"
+              >
+                {{ section }}
+              </div>
             </div>
           </div>
+          <div class="space-y-2">
+            <component :is="activeComponent" :modalTitle="modalTitle" />
+          </div>
         </div>
-        <div class="space-y-2">
-          <component :is="activeComponent" :modalTitle="modalTitle" />
-        </div>
-      </div>
+      </transition>
       <button
         @click="closeModal" @click.stop
         class="text-[#bfbfbf] justify-center items-center flex bg-white rounded-full h-[30px] w-[30px] absolute lg:left-[55%] lg:top-3 top-[15%] right-2"
@@ -139,5 +144,27 @@ updateSections();
   </div>
 </template>
 
+
 <style scoped>
+.slide-modal-enter-active,
+.slide-modal-leave-active {
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.slide-modal-enter-from {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.slide-modal-enter-to {
+  transform: translateX(0);
+  opacity: 1;
+}
+.slide-modal-leave-from {
+  transform: translateX(0);
+  opacity: 1;
+}
+.slide-modal-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
 </style>
+

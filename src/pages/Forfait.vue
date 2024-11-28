@@ -45,11 +45,15 @@ const modalData = {
 const toggleModal = (title = null) => {
   if (title && modalData[title]) {
     modalContent.value = modalData[title];
-    isModalOpen.value = true; 
+    isModalOpen.value = false; // Ferme d'abord le modal si nécessaire
+    setTimeout(() => {
+      isModalOpen.value = true; // Réouvre le modal après un léger délai
+    }, ); // Permet au DOM de se mettre à jour correctement
   } else {
     isModalOpen.value = false; 
   }
 };
+
 
 </script>
 
