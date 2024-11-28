@@ -113,7 +113,7 @@ updateSections();
                 v-for="section in availableSections"
                 :key="section"
                 :class="{
-                  'text-[#6c757d] bg-white rounded-[50px] h-[38px] min-w-[174px] justify-center items-center w-full':
+                  'text-[#6c757d] bg-white rounded-[50px] h-[38px] min-w-[140px] justify-center items-center w-full':
                     activeSection === section,
                   'text-gray-700': activeSection !== section
                 }"

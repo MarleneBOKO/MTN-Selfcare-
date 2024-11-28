@@ -128,7 +128,7 @@ const optionmomo = ref('main');
 
           <div class="flex flex-col w-[48%] p-[10px] bg-white border border-solid border-[#ced4d9] rounded-[7px] cursor-pointer">
             <label class="flex justify-between">
-              <span class="text-sm text-[#6c757d]">Offrir</span>
+              <span class="text-xs text-[#6c757d]">Offrir</span>
               <input
                 type="radio"
                 :name="'WABAA_' + item.title"
@@ -137,7 +137,7 @@ const optionmomo = ref('main');
                 v-model="selectedOption"
               />
             </label>
-            <span class="text-sm text-[#6c757d] text-wrap">Activer sur autre numéro</span>
+            <span class="text-xs text-[#6c757d] text-wrap">Activer sur autre numéro</span>
           </div>
         </div>
 
@@ -186,7 +186,7 @@ const optionmomo = ref('main');
           >
             <i class="kgk-mtn-BW_Icons_MTNBusiness_Mobility_4 text-black"></i>
           </span>
-          <span class="ml-2 text-sm">Mobile Money</span>
+          <span class="text-sm font-medium text-gray-700">Mobile Money</span>
         </div>
         </div>
 

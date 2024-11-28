@@ -86,7 +86,7 @@
           <OperationItem
             boldText="Activer internet"
             paragraphText=" Recevoir les paramètres internet "
-             @showModal="openModal"
+             @click="openModal('Activer internet')"
              class="cursor-pointer"
 
           /></div>
@@ -95,6 +95,8 @@
             boldText="Désactiver internet"
             paragraphText=" Désactiver internet sur ma SIM "
              @showModal="openModal"
+             @click="openModal('Désactiver internet')"
+
              class="cursor-pointer"
 
           /></div>
