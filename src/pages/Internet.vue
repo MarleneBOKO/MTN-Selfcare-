@@ -7,8 +7,13 @@
       <div v-else class="min-h-[250px] border border-solid border-[#dee2e6] flex items-center justify-center px-0 mt-4 bg-white rounded-[16px] p-[15px] overflow-hidden">
         <div class="h-full w-full">
           <div class="pt-3 pb-4 px-4 flex justify-end">
-            <button @click="downloadPDF" class=" flex items-center py-2 mb-3 bg-[#fc0] text-black rounded-[30px] text-sm font-medium px-4 border-none">
-              <span>Télécharger en PDF</span>
+            <button 
+                @click="downloadPDF" 
+                :disabled="isLoading" 
+                class="flex items-center py-2 mb-3 bg-[#fc0] text-black rounded-[30px] text-sm font-medium px-4 border-none"
+                >
+                <span v-if="isLoading">Chargement...</span>
+                <span v-else>Télécharger en PDF</span>
             </button>
           </div>
       
@@ -47,6 +52,8 @@
   import { ref, computed, watch, onMounted } from 'vue';
   import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+
+const isLoading = ref(false);
   const props = defineProps({
     startDate: {
       type: Date,
@@ -258,80 +265,121 @@ const filterData = () => {
   });
   const convertImageToBase64 = (imagePath) => {
   return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = "Anonymous"; // Nécessaire si l'image est externe
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-      resolve(canvas.toDataURL("image/png")); // Conversion en Base64
-    };
-    img.onerror = (error) => reject(error);
-    img.src = imagePath;
+    // Vérifiez si l'image existe dans le chemin public
+    const fullPath = import.meta.env.VITE_BASE_URL 
+      ? `${import.meta.env.VITE_BASE_URL}${imagePath}` 
+      : imagePath;
+
+    fetch(fullPath)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Image not found');
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        return new Promise((resolveBlob, rejectBlob) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolveBlob(reader.result);
+          reader.onerror = rejectBlob;
+          reader.readAsDataURL(blob);
+        });
+      })
+      .then(base64 => {
+        resolve(base64);
+      })
+      .catch(error => {
+        console.error('Error converting image:', error);
+        resolve(null); // Résout avec null au lieu de rejeter
+      });
   });
 };
 
 const downloadPDF = async () => {
+  isLoading.value = true; // Démarrer le chargement
+
   const doc = new jsPDF();
 
-  // Titre du document
-  doc.setFontSize(18);
-  doc.text('Détails de Consommation', 14, 22);
-
-  // Sous-titre avec la période
-  doc.setFontSize(10);
-  const startDateStr = props.startDate ? props.startDate.toLocaleDateString() : 'Non spécifié';
-  const endDateStr = props.endDate ? props.endDate.toLocaleDateString() : 'Non spécifié';
-  doc.text(`Période: ${startDateStr} - ${endDateStr}`, 14, 30);
-
-  // Préparer les données du tableau
-  const tableRows = [];
-  for (const item of filteredData.value) {
-    try {
-      const base64Image = await convertImageToBase64(item.image);
-      tableRows.push([
-        { content: item.service, image: base64Image }, // Ajouter l'image et le texte
-        `${item.consumption.toFixed(2)} MB`,
-      ]);
-    } catch (error) {
-      console.error("Erreur de conversion de l'image:", error);
+  // Fonction pour formater la date
+  const formatDate = (date) => {
+    if (!date || isNaN(new Date(date).getTime())) {
+      return "Date invalide"; // Retourne un texte par défaut si la date est invalide
     }
-  }
+    const validDate = new Date(date);
+    const day = String(validDate.getDate()).padStart(2, '0');
+    const month = String(validDate.getMonth() + 1).padStart(2, '0');
+    const year = validDate.getFullYear();
+    return `${day} - ${month} - ${year}`;
+  };
 
-  // Ajouter la table
+  // Ajout de la date et du numéro
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.text(`Date: ${formatDate(new Date())}`, 14, 20);
+  doc.text(`Numéro: 53843978`, 14, 28);
+
+  // Ajout de la période
+  doc.setFontSize(8);
+  doc.text(`Période: ${formatDate(props.startDate)} au ${formatDate(props.endDate)}`, 140, 20, { align: "right" });
+
+  // Ajout du titre principal avec fond noir
+  doc.setFillColor(0, 0, 0); // Couleur noire
+  doc.rect(14, 36, 180, 10, "F"); // Rectangle noir
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(255, 255, 255); // Couleur du texte blanc
+  doc.text("Relevé des consommations Internet", 105, 43, { align: "center", justify: "center" });
+
+  // Réinitialisation de la couleur du texte pour le tableau
+  doc.setTextColor(0, 0, 0);
+
+  // Transformation des données pour le tableau
+  const tableData = await Promise.all(
+    filteredData.value.map(async (item) => {
+      const imgBase64 = await convertImageToBase64(item.image).catch(() => null);
+      return [
+        imgBase64 ? { image: imgBase64, width: 8, height: 8, } : "", // Image en base64
+        item.service,
+        `${item.consumption} MB`,
+        item.image
+      ];
+    })
+  );
+
+  // Création du tableau avec `autoTable`
   doc.autoTable({
-    head: [["Service", "Consommation (MB)"]],
-    body: tableRows,
-    startY: 40,
-    theme: 'striped',
-    styles: { fontSize: 9, cellPadding: 3 },
-    headStyles: { fillColor: [52, 58, 64], textColor: 255 },
+    head: [["", "Applications / Site Web", "Consommation"]],
+    body: tableData,
+    startY: 46.5, // Ajuste la position du tableau
+    styles: { fontSize: 8, cellPadding: 3 },
+    theme: "plain", // Pas de bordures inutiles
+    headStyles: { fillColor: [242, 242, 242], textColor: [0, 0, 0], fontStyle: "bold",  },
+    bodyStyles: { fillColor: [242, 242, 242] },
+    alternateRowStyles: { fillColor: [255, 255, 255] },
     columnStyles: {
-      0: {
-        cellWidth: 80,
-        renderer: (doc, data) => {
-          const rowData = data.cell.raw;
-          if (rowData.image) {
-            // Ajouter l'image et le texte
-            doc.addImage(rowData.image, 'PNG', data.cell.x + 2, data.cell.y + 2, 10, 10);
-            doc.text(rowData.content, data.cell.x + 14, data.cell.y + 8);
-          } else {
-            doc.text(rowData.content || "", data.cell.x + 2, data.cell.y + 8);
-          }
-        },
-      },
+      0: { cellWidth: 20, halign: "left" },
+      1: { cellWidth: 120 },
+      2: { cellWidth: 40, halign: "right" },
     },
-  });
+    didParseCell: (data) => {
+      if (data.cell.raw && data.cell.raw.image) {
+        const imgWidth = data.cell.raw.width;
+        const imgHeight = data.cell.raw.height;
 
-  // Ajouter le total en bas
-  doc.setFontSize(10);
-  doc.text(`Total des consommations: ${totalConsumption.value} MB`, 14, doc.autoTable.previous.finalY + 10);
+        // Calcul de la position de l'image
+        const x = data.cell.x + (data.cell.width / 2) - (imgWidth / 2); // Centrer l'image
+        const y = data.cell.y + (data.cell.height / 2) - (imgHeight / 2); // Centrer l'image
+
+        doc.addImage(data.cell.raw.image, 'PNG', x, y, imgWidth, imgHeight);
+        data.cell.text = ""; // Ne pas afficher le texte par défaut
+      }
+    }
+  });
 
   // Sauvegarder le PDF
   doc.save("consommation_internet.pdf");
+ isLoading.value = false; // Arrêter le chargement
 };
+
 
 
   </script>
