@@ -68,11 +68,12 @@
 
           <div class="grid w-full gap-8 lg:grid-cols-4 md:grid-cols-2">
             <div class="min-w-[190px]">
-          <OperationItem
-            boldText="MTN Infos carte SIM"
+              <OperationItem
+            boldText="Infos carte SIM"
             paragraphText=" Informations perso liées à la SIM "
-           @click="toggleModal"
+            @click="toggleModal"
             class="cursor-pointer"
+
           /></div>
           <div class="min-w-[190px]">
           <OperationItem
@@ -133,11 +134,8 @@
         </div>
     </div>
     <button @click="toggleModal" class="w-full rounded-[30px] items-center h-[35px] justify-center text-[#106887] border border-[#106887] text-sm px-[15px] hover:bg-[#6494a5] hover:border-[#106887]">Afficher les détails</button>
-    <ModalInfo 
-    v-if="isModalOpen" 
-    @close="toggleModal" 
-    :isOpen="isModalOpen"
-  />
+    <ModalInfo :isOpen="isModalOpen" @close="toggleModal" />
+
         </div>
   </div>
   <div class="bg-white p-[20px] rounded-[12px] mb-[30px] flex flex-col min-w-[300px] h-[74px] relative ">
@@ -207,7 +205,7 @@ const modalData = {
 
 // Fonction pour ouvrir le ModalInfo
 const toggleModal = () => {
-  isModalOpen.value = !isModalOpen.value;
+isModalOpen.value = !isModalOpen.value;
 };
 
 // Fonction pour ouvrir d'autres modaux (par exemple, ModalYellow)
