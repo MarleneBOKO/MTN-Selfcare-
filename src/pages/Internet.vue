@@ -309,7 +309,7 @@ const downloadPDF = async () => {
     const day = String(validDate.getDate()).padStart(2, '0');
     const month = String(validDate.getMonth() + 1).padStart(2, '0');
     const year = validDate.getFullYear();
-    return `${day} - ${month} - ${year}`;
+    return `${day}-${month}-${year}`;
   };
 
   // Ajout de la date et du numéro
@@ -356,11 +356,9 @@ const downloadPDF = async () => {
     bodyStyles: { fillColor: [242, 242, 242] },
     alternateRowStyles: { fillColor: [255, 255, 255] },
     columnStyles: {
-      0: { cellWidth: 20, halign: "left" },
-      1: { cellWidth: 120 },
-      2: { cellWidth: 40, halign: "right" },
-    },
-    didParseCell: (data) => {
+      0: { cellWidth: 20, halign: "center",
+      
+      didParseCell: (data) => {
       if (data.cell.raw && data.cell.raw.image) {
         const imgWidth = data.cell.raw.width;
         const imgHeight = data.cell.raw.height;
@@ -373,13 +371,19 @@ const downloadPDF = async () => {
         data.cell.text = ""; // Ne pas afficher le texte par défaut
       }
     }
+      
+      
+       },
+      1: { cellWidth: 120 },
+      2: { cellWidth: 40, halign: "right" },
+    },
+   
   });
 
   // Sauvegarder le PDF
   doc.save("consommation_internet.pdf");
  isLoading.value = false; // Arrêter le chargement
-};
-
+}; 
 
 
   </script>
