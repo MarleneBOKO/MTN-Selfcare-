@@ -19,8 +19,8 @@
       ></div>
   
       <!-- Modal centré, avec un max-width sur grands écrans -->
-      <div class="relative z-40 flex items-center justify-center w-full max-w-md lg:max-w-lg">
-        <div class="overflow-hidden bg-white shadow-xl lg:rounded-lg">
+      <div class="relative z-40 flex items-center justify-center w-full max-w-md ">
+        <div class="overflow-hidden bg-white shadow-xl lg:rounded-lg lg:max-w-[500px] max-w-[lg:max-w-[500px]]">
           <header class="flex items-center justify-between p-4 border-b h-[62px] bg-[#ffcc01] lg:rounded-t-lg">
             <h5 class="text-xl font-bold">{{ modalTitle }}</h5>
           </header>

@@ -71,14 +71,14 @@
           <OperationItem
             boldText="MTN Infos carte SIM"
             paragraphText=" Informations perso liées à la SIM "
-            @click="toggleModal"
+           @click="toggleModal"
             class="cursor-pointer"
           /></div>
           <div class="min-w-[190px]">
           <OperationItem
             boldText="PUK"
             paragraphText=" Récupérer mon code PUK "
-             @showModal="openModal"
+             @click="openModal('PUK')"
              class="cursor-pointer"
 
           /></div>
@@ -131,8 +131,12 @@
         </div>
     </div>
     <button @click="toggleModal" class="w-full rounded-[30px] items-center h-[35px] justify-center text-[#106887] border border-[#106887] text-sm px-[15px] hover:bg-[#6494a5] hover:border-[#106887]">Afficher les détails</button>
-    <ModalInfo  :isOpen="isModalOpen"  @close="toggleModal" />
-      </div>
+    <ModalInfo 
+    v-if="isModalOpen" 
+    @close="toggleModal" 
+    :isOpen="isModalOpen"
+  />
+        </div>
   </div>
   <div class="bg-white p-[20px] rounded-[12px] mb-[30px] flex flex-col min-w-[300px] h-[74px] relative ">
     <div class="absolute left-0 h-[20px] top-[20px] bg-[#ffcc01] w-[10px] "></div>
@@ -167,9 +171,7 @@ onMounted(() => {
     isLoading.value = false; 
   }, 3000);
 });
-const toggleModal = () => {
-  isModalOpen.value = !isModalOpen.value;
-};
+
 const modalData = {
   "MTN Infos carte SIM": {
     icon: "kgk-mtn-phonelink_lock",
@@ -201,8 +203,15 @@ const modalData = {
   }
 };
 
+// Fonction pour ouvrir le ModalInfo
+const toggleModal = () => {
+  isModalOpen.value = !isModalOpen.value;
+};
+
+// Fonction pour ouvrir d'autres modaux (par exemple, ModalYellow)
 const openModal = (title) => {
   modalContent.value = modalData[title];
   isModalVisible.value = true;
 };
+
 </script>

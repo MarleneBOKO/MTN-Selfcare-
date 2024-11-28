@@ -94,13 +94,10 @@ updateSections();
 </script>
 
 <template>
+  
   <div>
     <div v-if="isVisible" class="fixed inset-0 z-50 bg-black bg-opacity-50">
       <div
-        :class="[
-          'transition-all duration-500 ease-in-out',
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        ]"
         class="fixed lg:top-0 lg:right-0 top-[20%] right-0 z-50 lg:h-full overflow-y-auto bg-white shadow-lg w-full md:w-[40%] lg:bottom-0 h-[80%]"
       >
         <header class="flex items-center justify-between p-4 border-b bg-[#ffcc01] py-[15px] px-[20px] relative">
