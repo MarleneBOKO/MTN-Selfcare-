@@ -68,7 +68,7 @@
 
       </ul>
       </div>
-      <div class="flex py-[15px] px-0 border-2 gap-1 border-t-[#d3ad13] border-b-0 border-x-0 fixed bottom-0">
+      <div class="flex py-[15px] px-0 border-2 gap-1 border-t-[#d3ad13] border-b-0 border-x-0 fixed bottom-0  items-center">
         <i data-v-453dbfae="" class="mdi mdi-logout text-[#b81e50]" style="font-size: 22px;"></i>
                 <span class="text-[#b81e50] font-bold">Déconnexion</span>
       </div>

@@ -137,7 +137,7 @@ const optionmomo = ref('main');
                 v-model="selectedOption"
               />
             </label>
-            <span class="text-sm text-[#6c757d]">Activer sur autre numéro</span>
+            <span class="text-sm text-[#6c757d] text-wrap">Activer sur autre numéro</span>
           </div>
         </div>
 

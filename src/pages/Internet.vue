@@ -7,7 +7,7 @@
       <div v-else class="min-h-[250px] border border-solid border-[#dee2e6] flex items-center justify-center px-0 mt-4 bg-white rounded-[16px] p-[15px] overflow-hidden">
         <div class="h-full w-full">
           <div class="pt-3 pb-4 px-4 flex justify-end">
-            <button @click="downloadPDF" class="btn-primary flex items-center py-2 mb-3 bg-[#fc0] text-black rounded-[30px] text-sm font-medium px-4 border-none">
+            <button @click="downloadPDF" class=" flex items-center py-2 mb-3 bg-[#fc0] text-black rounded-[30px] text-sm font-medium px-4 border-none">
               <span>Télécharger en PDF</span>
             </button>
           </div>
@@ -62,157 +62,157 @@ import 'jspdf-autotable';
     { 
       service: 'Facebook', 
       consumption: 137.02, 
-      image: '/public/Images/consommation/facebook.png', 
+      image: '/Images/consommation/facebook.png', 
       date: new Date('2024-11-27') 
     },
     { 
       service: 'WhatsApp', 
       consumption: 70.72, 
-      image: '/public/Images/consommation/whatsapp.png', 
+      image: '/Images/consommation/whatsapp.png', 
       date: new Date('2023-10-02') 
     },
     { 
       service: 'Akamaihd', 
       consumption: 44.79, 
-      image: '/public/Images/consommation/Akamaihd.png', 
+      image: '/Images/consommation/Akamaihd.png', 
       date: new Date('2023-10-03') 
     },
     { 
       service: 'AmazonS3', 
       consumption: 43.39, 
-      image: '/public/Images/consommation/AmazonS3.png', 
+      image: '/Images/consommation/AmazonS3.png', 
       date: new Date('2023-10-04') 
     },
     { 
       service: 'SnapChat', 
       consumption: 31.37, 
-      image: '/public/Images/consommation/snapchat.png', 
+      image: '/Images/consommation/snapchat.png', 
       date: new Date('2023-10-05') 
     },
     { 
       service: 'HTTPS', 
       consumption: 16.65, 
-      image: '/public/Images/consommation/HTTPS.png', 
+      image: '/Images/consommation/HTTPS.png', 
       date: new Date('2023-10-06') 
     },
     { 
       service: '38588', 
       consumption: 11.01, 
-      image: '/public/Images/consommation/unknown.png', 
+      image: '/Images/consommation/unknown.png', 
       date: new Date('2023-10-07') 
     },
     { 
       service: 'Crashlytics', 
       consumption: 10.33, 
-      image: '/public/Images/consommation/crashlytics.png', 
+      image: '/Images/consommation/crashlytics.png', 
       date: new Date('2023-10-08') 
     },
     { 
       service: '9823', 
       consumption: 9.37, 
-      image: '/public/Images/consommation/unknown.png', 
+      image: '/Images/consommation/unknown.png', 
       date: new Date('2023-10-09') 
     },
     { 
       service: 'AppleiCloud', 
       consumption: 7.22, 
-      image: '/public/Images/consommation/AppleiCloud.png', 
+      image: '/Images/consommation/AppleiCloud.png', 
       date: new Date('2023-10-10') 
     },
     { 
       service: 'GooglePhotos', 
       consumption: 6.39, 
-      image: '/public/Images/consommation/GooglePhotos.png', 
+      image: '/Images/consommation/GooglePhotos.png', 
       date: new Date('2023-10-11') 
     },
     { 
       service: 'UNKNOWN', 
       consumption: 6.27, 
-      image: '/public/Images/consommation/unknown.png', 
+      image: '/Images/consommation/unknown.png', 
       date: new Date('2023-10-12') 
     },
     { 
       service: 'YouTube', 
       consumption: 5.53, 
-      image: '/public/Images/consommation/youtube.png', 
+      image: '/Images/consommation/youtube.png', 
       date: new Date('2023-10-13') 
     },
     { 
       service: 'Unity3D', 
       consumption: 4.40, 
-      image: '/public/Images/consommation/unity3d.png', 
+      image: '/Images/consommation/unity3d.png', 
       date: new Date('2023-10-14') 
     },
     { 
       service: 'ITunes', 
       consumption: 3.36, 
-      image: '/public/Images/consommation/itunes.png', 
+      image: '/Images/consommation/itunes.png', 
       date: new Date('2023-10-15') 
     },
     { 
       service: 'GoogleSearch', 
       consumption: 2.96, 
-      image: '/public/Images/consommation/GoogleSearch.png', 
+      image: '/Images/consommation/GoogleSearch.png', 
       date: new Date('2023-10-16') 
     },
     { 
       service: 'Google_Common', 
       consumption: 2.77, 
-      image: '/public/Images/consommation/google_common.png', 
+      image: '/Images/consommation/google_common.png', 
       date: new Date('2023-10-17') 
     },
     { 
       service: 'Slack', 
       consumption: 2.69, 
-      image: '/public/Images/consommation/slack.png', 
+      image: '/Images/consommation/slack.png', 
       date: new Date('2023-10-18') 
     },
     { 
       service: 'WebMail_Gmail', 
       consumption: 2.05, 
-      image: '/public/Images/consommation/webmail_gmail.png', 
+      image: '/Images/consommation/webmail_gmail.png', 
       date: new Date('2023-10-19') 
     },
     { 
       service: 'Apple_', 
       consumption: 2.00, 
-      image: '/public/Images/consommation/apple_service.png', 
+      image: '/Images/consommation/apple_service.png', 
       date: new Date('2023-10-20') 
     },
     { 
       service: 'SSL', 
       consumption: 1.92, 
-      image: '/public/Images/consommation/ssl.png', 
+      image: '/Images/consommation/ssl.png', 
       date: new Date('2023-10-21') 
     },
     { 
       service: 'IOS_PushMessage', 
       consumption: 1.91, 
-      image: '/public/Images/consommation/IOS_PushMessage.png', 
+      image: '/Images/consommation/IOS_PushMessage.png', 
       date: new Date('2023-10-22') 
     },
     { 
       service: 'Apple_Siri', 
       consumption: 0.49, 
-      image: '/public/Images/consommation/Apple_Siri.png', 
+      image: '/Images/consommation/Apple_Siri.png', 
       date: new Date('2023-10-23') 
     },
     { 
       service: 'AppleGameCenter', 
       consumption: 0.31, 
-      image: '/public/Images/consommation/AppleGameCenter.png', 
+      image: '/Images/consommation/AppleGameCenter.png', 
       date: new Date('2023-10-24') 
     },
     { 
       service: 'Facebook_Messenger', 
       consumption: 0.29, 
-      image: '/public/Images/consommation/facebook_messenger.png', 
+      image: '/Images/consommation/facebook_messenger.png', 
       date: new Date('2023-10-25') 
     },
     { 
       service: 'Spotify', 
       consumption: 0.25, 
-      image: '/public/Images/consommation/spotify.png', 
+      image: '/Images/consommation/spotify.png', 
       date: new Date('2023-10-26') 
     },
 ]);
