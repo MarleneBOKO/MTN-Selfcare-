@@ -131,7 +131,7 @@ updateSections();
       </transition>
       <button
         @click="closeModal" @click.stop
-        class="text-[#bfbfbf] justify-center items-center flex bg-white rounded-full h-[30px] w-[30px] absolute lg:left-[55%] lg:top-3 top-[15%] right-2"
+        class="text-[#bfbfbf] justify-center items-center flex bg-white rounded-full h-[30px] w-[30px] absolute lg:left-[55%] lg:top-3 top-[14%] right-2"
       >
         <svg viewBox="0 0 16 16" class="w-5 h-5">
           <path

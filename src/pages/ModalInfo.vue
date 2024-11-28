@@ -3,10 +3,10 @@
     name="smooth-slide"
     enter-active-class="transition-all duration-500 ease-out"
     leave-active-class="transition-all duration-500 ease-in"
-    enter-from-class="-translate-x-full opacity-0"
+    enter-from-class="translate-x-[-100%] opacity-0"
     enter-to-class="translate-x-0 opacity-100"
     leave-from-class="translate-x-0 opacity-100"
-    leave-to-class="-translate-x-full opacity-0"
+    leave-to-class="translate-x-[-100%] opacity-0"
   >
     <div v-if="isModalOpen" class="fixed inset-0 z-50 bg-black bg-opacity-50">
       <div
@@ -41,7 +41,7 @@
               <td class="p-4 font-bold text-[#212529] text-base">Commune</td>
               <td class="p-4 text-[#212529] text-base">-</td>
             </tr>
-            <tr class="bg-[rgba(0,0,0,.05)] h-[44px]">
+            <tr class="bg -[rgba(0,0,0,.05)] h-[44px]">
               <td class="p-4 font-bold text-[#212529] text-base">Ville</td>
               <td class="p-4 text-[#212529] text-base">COTONOU</td>
             </tr>
@@ -55,7 +55,7 @@
             </tr>
             <tr class="h-[44px]">
               <td class="p-4 font-bold text-[#212529] text-base">Lieu Naissance</td>
-              <td class="p- 4 text-[#212529] text-base">Cotonou</td>
+              <td class="p-4 text-[#212529] text-base">Cotonou</td>
             </tr>
             <tr class="bg-[rgba(0,0,0,.05)] h-[44px]">
               <td class="p-4 font-bold text-[#212529] text-base">Pièce</td>
@@ -77,7 +77,7 @@
         </table>
       </div>
 
-      <button @click="closeModal" @click.stop aria-label="Close" class="text-[#bfbfbf] justify-center items-center flex bg-white rounded-full h-[30px] w-[30px] absolute lg:right-[55%] lg:top-3 top-[15%] right-2 transform transition-all duration-500 ease-in-out">
+      <button @click="closeModal" @click.stop aria-label="Close" class="text-[#bfbfbf] justify-center items-center flex bg-white rounded-full h-[30px] w-[30px] absolute lg:right-[55%] lg:top-3 top-[14%] right-2 transform transition-all duration-500 ease-in-out">
         <svg viewBox="0 0 16 16" class="w-5 h-5">
           <path fill="currentColor" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
         </svg>
@@ -129,7 +129,7 @@ const closeModal = () => {
   opacity: 1;
 }
 
-.smooth-slide-leave-from {
+.s mooth-slide-leave-from {
   transform: translateX(0);
   opacity: 1;
 }
