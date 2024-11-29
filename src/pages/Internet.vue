@@ -235,19 +235,20 @@ const isLoading = ref(false);
 const selectedEndDate = ref(null);
 
 const filterData = () => {
-  // Utilisez les dates sélectionnées comme nouvelle référence
-  props.startDate = selectedStartDate.value;
-  props.endDate = selectedEndDate.value;
-
   if (!props.startDate || !props.endDate) {
     filteredData.value = data.value;
     return;
   }
 
   const filtered = data.value.filter(item => {
-    const itemDate = new Date(item.date.setHours(0, 0, 0, 0));
-    const startDate = new Date(props.startDate.setHours(0, 0, 0, 0));
-    const endDate = new Date(props.endDate.setHours(0, 0, 0, 0));
+    const itemDate = new Date(item.date);
+    itemDate.setHours(0, 0, 0, 0);
+    
+    const startDate = new Date(props.startDate);
+    startDate.setHours(0, 0, 0, 0);
+    
+    const endDate = new Date(props.endDate);
+    endDate.setHours(0, 0, 0, 0);
 
     return itemDate >= startDate && itemDate <= endDate;
   });
