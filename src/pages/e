@@ -1,85 +1,197 @@
 const downloadPDF = async () => {
-  isLoading.value = true; // Démarrer le chargement
+  isLoading.value = true;
 
   const doc = new jsPDF();
 
-
   // Fonction pour formater la date
   const formatDate = (date) => {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Les mois commencent à 0
-    const year = date.getFullYear();
+    if (!date || isNaN(new Date(date).getTime())) {
+      return "Date invalide";
+    }
+    const validDate = new Date(date);
+    const day = String(validDate.getDate()).padStart(2, '0');
+    const month = String(validDate.getMonth() + 1).padStart(2, '0');
+    const year = validDate.getFullYear();
     return `${day}-${month}-${year}`;
   };
 
-  // Date d'aujourd'hui
-  const today = formatDate(new Date());
-  doc.setFontSize(6);
-  doc.text(`Date: ${today}`, 14, 30);
+  // Ajout de la date et du numéro
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.text(`Date: ${formatDate(new Date())}`, 14, 20);
+  doc.text(`Numéro: ${Math.floor(Math.random() * 100000)}`, 14, 26);  // Simulated number
 
-  // Numéro de référence
-  const referenceNumber = "53843978"; // Remplacez par la logique pour générer un numéro si nécessaire
-  doc.text(`Numéro: ${referenceNumber}`, 14, 36);
+  // Add Title
+  doc.setFontSize(14);
+  doc.text("Consommation des services", 14, 40);
 
-  // Sous-titre avec la période
-  const startDateStr = props.startDate ? formatDate(props.startDate) : 'Non spécifié';
-  const endDateStr = props.endDate ? formatDate(props.endDate) : 'Non spécifié';
-  doc.text(`Période: ${startDateStr} - ${endDateStr}`, 14, 42);
-
-  // En-tête du tableau
-  doc.setFontSize(12);
-  doc.text('Relevé des consommations Internet', 14, 50);
-  
-  // Préparer les données du tableau
+  // Ajout de la table
+  const tableColumn = ["Services", "Consommation (MB)"];
   const tableRows = [];
-  for (const item of filteredData.value) {
-    try {
-      const base64Image = await convertImageToBase64(item.image);
-      tableRows.push([
-        { content: item.service, image: base64Image }, // Ajouter l'image et le texte
-        `${item.consumption.toFixed(2)} MB`,
-      ]);
-    } catch (error) {
-      console.error("Erreur de conversion de l'image:", error);
-    }
+
+  for (let i = 0; i < filteredData.value.length; i++) {
+    const item = filteredData.value[i];
+    const row = [
+      item.service,
+      item.consumption.toFixed(2)
+    ];
+    tableRows.push(row);
   }
 
-  // Ajouter la table
-  doc.autoTable({
-    head: [["Applications / Site Web", "Consommation (MB)"]],
-    body: tableRows,
-    startY: 60, // Ajustez la position de départ pour la table
-    theme: 'striped',
-    styles: { fontSize: 9, cellPadding: 3, halign: 'justify' },
-    headStyles: { fillColor: [52, 58, 64], textColor: 255 },
-    columnStyles: {
-      0: {
-        cellWidth: 80,
-        renderer: (doc, data) => {
-          const rowData = data.cell.raw;
-          if (rowData.image) {
-            // Ajouter l'image et le texte
-            doc.addImage(rowData.image, 'PNG', data.cell.x + 2, data.cell.y + 2, 10, 10);
-            doc.text(rowData.content, data.cell.x + 14, data.cell.y + 8);
-          } else {
-            doc.text(rowData.content || "", data.cell.x + 2, data.cell.y + 8);
-          }
-        },
-      },
-      1: {
-        halign: 'right', // Alignement à droite pour la consommation
-      },
-    },
+  // Convert the images to base64 (optional)
+  const base64Images = await Promise.all(
+    filteredData.value.map(item => convertImageToBase64(item.image))
+  );
+
+  // Set the images inside the PDF
+  base64Images.forEach((base64Image, index) => {
+    if (base64Image) {
+      const imageX = 14;
+      const imageY = 50 + (index * 10);
+      const imageWidth = 10;
+      const imageHeight = 10;
+      doc.addImage(base64Image, 'JPEG', imageX, imageY, imageWidth, imageHeight);
+    }
   });
 
-  // Ajouter le total en bas
-  doc.setFontSize(10);
-  doc.text(`Total des consommations: ${totalConsumption.value} MB`, 14, doc.autoTable.previous.finalY + 10);
+  // Add the table to the PDF
+  doc.autoTable({
+    startY: 70, // Start the table after the header
+    head: [tableColumn],
+    body: tableRows,
+    theme: 'grid',
+    headStyles: { fillColor: '#343a40', textColor: 'white', fontSize: 8 },
+    bodyStyles: { fontSize: 8 },
+    columnStyles: { 0: { cellWidth: 80 }, 1: { cellWidth: 40 } },
+    styles: { halign: 'center' }
+  });
+
+  // Save the PDF
+  doc.save('consommation_services.pdf');
+  isLoading.value = false;
+};
+
+
+
+const downloadPDF = async () => {
+  isLoading.value = true;
+
+  const doc = new jsPDF();
+
+  // Fonction pour formater la date
+  const formatDate = (date) => {
+    if (!date || isNaN(new Date(date).getTime())) {
+      return "Date invalide";
+    }
+    const validDate = new Date(date);
+    const day = String(validDate.getDate()).padStart(2, '0');
+    const month = String(validDate.getMonth() + 1).padStart(2, '0');
+    const year = validDate.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  // Ajout de la date et du numéro
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.text(`Date: ${formatDate(new Date())}`, 14, 20);
+  doc.text(`Numéro: 53843978`, 14, 28);
+
+  // Ajout de la période
+  doc.setFontSize(8);
+  doc.text(`Période: ${formatDate(props.startDate)} au ${formatDate(props.endDate)}`, 140, 20, { align: "right" });
+
+  // Ajout du titre principal avec fond noir
+  doc.setFillColor(0, 0, 0);
+  doc.rect(14, 36, 180, 10, "F");
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(255, 255, 255);
+  doc.text("Relevé des consommations Internet", 105, 43, { align: "center", justify: "center" });
+
+  // Réinitialisation de la couleur du texte
+  doc.setTextColor(0, 0, 0);
+
+  // Transformation des données pour le tableau
+  const tableData = await Promise.all(
+    filteredData.value.map(async (item) => {
+      const imgBase64 = await convertImageToBase64(item.image);
+      return [
+        imgBase64, 
+        item.service, 
+        `${item.consumption} MB`
+      ];
+    })
+  );
+
+  // Création du tableau avec `autoTable`
+  doc.autoTable({
+    head: [["", "Applications / Site Web", "Consommation"]],
+    body: tableData,
+    startY: 46.5,
+    styles: { 
+      fontSize: 8, 
+      cellPadding: 3 
+    },
+    theme: "plain",
+    headStyles: { 
+      fillColor: [242, 242, 242], 
+      textColor: [0, 0, 0], 
+      fontStyle: "bold" 
+    },
+    bodyStyles: { fillColor: [242, 242, 242] },
+    alternateRowStyles: { fillColor: [255, 255, 255] },
+    columnStyles: {
+      0: { 
+        cellWidth: 20, 
+        halign: "center"
+      },
+      1: { cellWidth: 120 },
+      2: { cellWidth: 40, halign: "right" }
+    },
+    didParseCell: (data) => {
+      // Gestion des images
+      if (data.column.index === 0 && data.cell.raw) {
+        if (data.cell.raw) {
+          doc.addImage(
+            data.cell.raw, 
+            'PNG', 
+            data.cell.x + 6, 
+            data.cell.y + 1, 
+            8, 
+            8
+          );
+          data.cell.text = ''; // Efface le texte de la cellule
+        }
+      }
+    }
+  });
 
   // Sauvegarder le PDF
   doc.save("consommation_internet.pdf");
-  isLoading.value = false; // Arrêter le chargement
+  isLoading.value = false;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

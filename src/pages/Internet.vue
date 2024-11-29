@@ -296,18 +296,18 @@ const filterData = () => {
 };
 
 const downloadPDF = async () => {
-  isLoading.value = true; // Démarrer le chargement
+  isLoading.value = true;
 
   const doc = new jsPDF();
 
   // Fonction pour formater la date
   const formatDate = (date) => {
     if (!date || isNaN(new Date(date).getTime())) {
-      return "Date invalide"; // Retourne un texte par défaut si la date est invalide
+      return "Date invalide";
     }
     const validDate = new Date(date);
-    const day = String(validDate.getDate()).padStart(2, '0');
-    const month = String(validDate.getMonth() + 1).padStart(2, '0');
+    const day = String(validDate.getDate()).padStart(2, "0");
+    const month = String(validDate.getMonth() + 1).padStart(2, "0");
     const year = validDate.getFullYear();
     return `${day}-${month}-${year}`;
   };
@@ -320,70 +320,99 @@ const downloadPDF = async () => {
 
   // Ajout de la période
   doc.setFontSize(8);
-  doc.text(`Période: ${formatDate(props.startDate)} au ${formatDate(props.endDate)}`, 140, 20, { align: "right" });
-
-  // Ajout du titre principal avec fond noir
-  doc.setFillColor(0, 0, 0); // Couleur noire
-  doc.rect(14, 36, 180, 10, "F"); // Rectangle noir
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(255, 255, 255); // Couleur du texte blanc
-  doc.text("Relevé des consommations Internet", 105, 43, { align: "center", justify: "center" });
-
-  // Réinitialisation de la couleur du texte pour le tableau
-  doc.setTextColor(0, 0, 0);
-
-  // Transformation des données pour le tableau
-  const tableData = await Promise.all(
-    filteredData.value.map(async (item) => {
-      const imgBase64 = await convertImageToBase64(item.image).catch(() => null);
-      return [
-        imgBase64 ? { image: imgBase64, width: 8, height: 8, } : "", // Image en base64
-        item.service,
-        `${item.consumption} MB`,
-        item.image
-      ];
-    })
-  );
-
-  // Création du tableau avec `autoTable`
-  doc.autoTable({
-    head: [["", "Applications / Site Web", "Consommation"]],
-    body: tableData,
-    startY: 46.5, // Ajuste la position du tableau
-    styles: { fontSize: 8, cellPadding: 3 },
-    theme: "plain", // Pas de bordures inutiles
-    headStyles: { fillColor: [242, 242, 242], textColor: [0, 0, 0], fontStyle: "bold",  },
-    bodyStyles: { fillColor: [242, 242, 242] },
-    alternateRowStyles: { fillColor: [255, 255, 255] },
-    columnStyles: {
-      0: { cellWidth: 20, halign: "center",
-      
-      didParseCell: (data) => {
-      if (data.cell.raw && data.cell.raw.image) {
-        const imgWidth = data.cell.raw.width;
-        const imgHeight = data.cell.raw.height;
-
-        // Calcul de la position de l'image
-        const x = data.cell.x + (data.cell.width / 2) - (imgWidth / 2); // Centrer l'image
-        const y = data.cell.y + (data.cell.height / 2) - (imgHeight / 2); // Centrer l'image
-
-        doc.addImage(data.cell.raw.image, 'PNG', x, y, imgWidth, imgHeight);
-        data.cell.text = ""; // Ne pas afficher le texte par défaut
-      }
-    }
-      
-      
-       },
-      1: { cellWidth: 120 },
-      2: { cellWidth: 40, halign: "right" },
-    },
-   
+  doc.text(`Période: ${formatDate(props.startDate)} au ${formatDate(props.endDate)}`, 140, 20, {
+    align: "right",
   });
 
-  // Sauvegarder le PDF
-  doc.save("consommation_internet.pdf");
- isLoading.value = false; // Arrêter le chargement
-}; 
+  // Ajout du titre principal avec fond noir
+  doc.setFillColor(0, 0, 0);
+  doc.rect(14, 36, 180, 10, "F");
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(255, 255, 255);
+  doc.text("Relevé des consommations Internet", 105, 43, { align: "center", justify: "center" });
+
+  // Réinitialisation de la couleur du texte
+  doc.setTextColor(0, 0, 0);
+
+  // Convertir les images en base64
+  const base64Images = await Promise.all(
+    filteredData.value.map((item) => convertImageToBase64(item.image))
+  );
+
+  // Préparer les données pour la table
+  const tableRows = [];
+  for (let i = 0; i < filteredData.value.length; i++) {
+    const item = filteredData.value[i];
+    const row = [
+      base64Images[i], // Image associée à la ligne
+      item.service, // Texte du service
+      `${item.consumption.toFixed(2)} MB`, // Consommation
+    ];
+    tableRows.push(row);
+  }
+
+  doc.autoTable({
+    
+    head: [["", "Applications / Site Web", "Consommation"]],    body: tableRows.map((row) => [
+      "", // Colonne réservée pour l'image
+      row[1], // Texte du service
+      row[2], // Consommation
+    ]),
+    startY: 46.5,
+    styles: { fontSize: 8, cellPadding: 3 },
+    theme: "plain",
+    headStyles: {
+      fillColor: [242, 242, 242],
+      textColor: [0, 0, 0],
+      fontStyle: "bold",
+      halign: "justify", // Justification des textes dans l'en-tête
+    },
+        bodyStyles: { fillColor: [242, 242, 242] },
+    alternateRowStyles: { fillColor: [255, 255, 255] },
+    columnStyles: {
+      0: { cellWidth: 20, halign: "center" }, // Colonne pour l'image
+      1: { cellWidth: 120, halign: "left" },
+      2: { cellWidth: 40, halign: "right" },
+    },
+    didDrawCell: (data) => {
+  const { row, column, cell } = data;
+
+  // Vérifier que la cellule appartient au corps (et non à l'en-tête)
+  if (row.section === "body" && column.index === 0) {
+    const imageX = cell.x + 2; // Position X avec un petit décalage
+    const imageY = cell.y + 2; // Position Y avec un petit décalage
+    const imageWidth = 5; // Largeur de l'image
+    const imageHeight = 5; // Hauteur de l'image
+    const radius = 8; // Rayon (50% pour un cercle parfait)
+
+    // Dessiner un rectangle arrondi pour l'image
+    doc.setDrawColor(255, 255, 255); // Optionnel : Couleur de remplissage (blanc ici pour un contour invisible)
+    doc.roundedRect(imageX, imageY, imageWidth, imageHeight, radius, radius, "FD");
+
+    // Ajouter l'image à l'intérieur de la bordure arrondie
+    if (tableRows[row.index][0]) {
+      doc.addImage(
+        tableRows[row.index][0],
+        "JPEG",
+        imageX,
+        imageY,
+        imageWidth,
+        imageHeight
+      );
+    }
+  }
+}
+
+  });
+
+  // Sauvegarde du PDF
+  doc.save("consommation_services.pdf");
+  isLoading.value = false;
+};
+
+
+
+
 
 
   </script>
